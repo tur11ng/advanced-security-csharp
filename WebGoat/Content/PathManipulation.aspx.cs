@@ -30,7 +30,7 @@ namespace OWASP.WebGoat.NET
         	//}
         	//else
         	//{
-        		string filename = Request.QueryString["filename"];
+                        string filename = Path.GetFileName(Request.QueryString["filename"]);
         		if(filename != null)
         		{
                     try

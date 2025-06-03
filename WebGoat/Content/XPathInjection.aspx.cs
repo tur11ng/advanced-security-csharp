@@ -23,6 +23,9 @@ namespace OWASP.WebGoat.NET
 
         private void FindSalesPerson(string state)
         {
+            if (!Regex.IsMatch(state, "^[A-Za-z]{2}$"))
+                return;
+
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(xml);
             XmlNodeList list = xDoc.SelectNodes("//salesperson[state='" + state + "']");

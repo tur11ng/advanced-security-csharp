@@ -61,19 +61,19 @@ namespace OWASP.WebGoat.NET
 
         private void WriteXML()
         {
-            string xml = "<?xml version=\"1.0\" standalone=\"yes\"?>"+ Environment.NewLine +"<users>" + Environment.NewLine;
-            foreach (XmlUser user in users)
+            using (XmlWriter writer = XmlWriter.Create(Server.MapPath("/App_Data/XmlInjectionUsers.xml"), new XmlWriterSettings { Encoding = Encoding.UTF8, Indent = true }))
             {
-                xml += "<user>" + Environment.NewLine;
-                xml += "<name>" + user.Name + "</name>" + Environment.NewLine;
-                xml += "<email>" + user.Email + "</email>" + Environment.NewLine;
-                xml += "</user>" + Environment.NewLine;
+                writer.WriteStartDocument();
+                writer.WriteStartElement("users");
+                foreach (XmlUser user in users)
+                {
+                    writer.WriteStartElement("user");
+                    writer.WriteElementString("name", user.Name);
+                    writer.WriteElementString("email", user.Email);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
             }
-            xml += "</users>" +Environment.NewLine;
-
-            XmlTextWriter writer = new XmlTextWriter(Server.MapPath("/App_Data/XmlInjectionUsers.xml"), Encoding.UTF8);
-            writer.WriteRaw(xml);
-            writer.Close();
         }
     }
 
