@@ -20,7 +20,9 @@ namespace OWASP.WebGoat.NET
             string userName = txtUsername.Text;
             string password = txtPassword.Text;
 
-            Regex testPassword = new Regex(userName);
+            // Escape user input and anchor pattern to mitigate ReDoS
+            string safePattern = "^" + Regex.Escape(userName) + "$";
+            Regex testPassword = new Regex(safePattern);
             Match match = testPassword.Match(password);
             if (match.Success)
             {

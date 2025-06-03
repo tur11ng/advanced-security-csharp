@@ -65,11 +65,11 @@ namespace OWASP.WebGoat.NET.WebGoatCoins
             Response.Cookies.Add(cookie);
             
             string returnUrl = Request.QueryString["ReturnUrl"];
-            
-            if (returnUrl == null) 
+
+            if (string.IsNullOrEmpty(returnUrl) || !Uri.IsWellFormedUriString(returnUrl, UriKind.Relative))
                 returnUrl = "/WebGoatCoins/MainPage.aspx";
-                
-            Response.Redirect(returnUrl);        
+
+            Response.Redirect(returnUrl);
         }
     }
 }

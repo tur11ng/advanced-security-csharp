@@ -73,8 +73,8 @@ namespace OWASP.WebGoat.NET.WebGoatCoins
 
                 foreach (DataRow commentRow in childrows)
                 {
-                    comments += "<strong>Email:</strong>" + commentRow["email"] + "<span style='font-size: x-small;color: #E47911;'> (Email Address Verified!) </span><br/>";
-                    comments += "<strong>Comment:</strong><br/>" + commentRow["comment"] + "<br/><hr/>";
+                    comments += "<strong>Email:</strong>" + Server.HtmlEncode(commentRow["email"].ToString()) + "<span style='font-size: x-small;color: #E47911;'> (Email Address Verified!) </span><br/>";
+                    comments += "<strong>Comment:</strong><br/>" + Server.HtmlEncode(commentRow["comment"].ToString()) + "<br/><hr/>";
                 }
 
             }

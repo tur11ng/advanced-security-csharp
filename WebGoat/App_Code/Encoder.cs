@@ -200,20 +200,23 @@ namespace OWASP.WebGoat.NET.App_Code
 
         public static string ToJSONSAutocompleteString(string query, DataTable dt)
         {
-            char[] badvalues = { '[', ']', '{', '}'};
+            char[] badvalues = { '[', ']', '{', '}' };
 
             foreach (char c in badvalues)
                 query = query.Replace(c, '#');
 
+            // Encode query to prevent XSS in the resulting JSON
+            string encodedQuery = HttpUtility.JavaScriptStringEncode(query);
+
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("{\nquery:'" + query + "',\n");
+            sb.Append("{\nquery:'" + encodedQuery + "',\n");
             sb.Append("suggestions:[");
             
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataRow row = dt.Rows[i];
-                string email = row[0].ToString();
+                string email = HttpUtility.JavaScriptStringEncode(row[0].ToString());
                 sb.Append("'" + email + "',");
             }
             
